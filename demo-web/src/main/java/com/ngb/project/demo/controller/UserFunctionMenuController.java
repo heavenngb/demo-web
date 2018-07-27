@@ -23,4 +23,9 @@ public class UserFunctionMenuController {
 		List<UserFunctionMenuVO> vos = this.userService.findAll();
 		return vos;
 	}
+	
+	@RequestMapping(value="main")
+	public String mainPage() {
+		return "menu/MenuMainPage";
+	}
 }

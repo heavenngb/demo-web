@@ -27,4 +27,9 @@ public class UserController {
 		mv.addObject("userVOs", vos);
 		return vos;
 	}
+	
+	@RequestMapping(value="main")
+	public String mainPage() {
+		return "user/UserMainPage";
+	}
 }
