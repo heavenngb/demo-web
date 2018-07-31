@@ -32,4 +32,9 @@ public class UserController {
 	public String mainPage() {
 		return "user/UserMainPage";
 	}
+	
+	@RequestMapping(value="add")
+	public String addPage() {
+		return "user/UserAddPage";
+	}
 }

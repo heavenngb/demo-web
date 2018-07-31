@@ -7,13 +7,87 @@
 <link rel="stylesheet" type="text/css" href="/css/demo.css">
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
-<script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#user-main-page-datagrid').datagrid({
+			url : '/user/findAll',
+			method : 'get',
+			toolbar : toolbar,
+			columns : [ [ {
+				field : 'userID',
+				title : '用户ID',
+				width : 100
+			}, {
+				field : 'userName',
+				title : '用户姓名',
+				width : 100
+			}, {
+				field : 'userLoginName',
+				title : '用户登录名称',
+				width : 100
+			}, {
+				field : 'userLoginPassword',
+				title : '用户登录密码',
+				width : 100
+			}, {
+				field : 'userStatus',
+				title : '用户状态',
+				width : 100
+			}, {
+				field : 'userLoginStatus',
+				title : '用户登录状态',
+				width : 100
+			}, {
+				field : 'userPurView',
+				title : '用户权限',
+				width : 100
+			} ] ]
+		});
+	});
+	
 
+	var toolbar = [ {
+		text : 'Add',
+		iconCls : 'icon-add',
+		handler : function() {
+			alert('add');
+			add();
+		}
+	}, {
+		text : 'Cut',
+		iconCls : 'icon-cut',
+		handler : function() {
+			alert('cut')
+		}
+	}, '-', {
+		text : 'Save',
+		iconCls : 'icon-save',
+		handler : function() {
+			alert('save')
+		}
+	} ];
+	
+	function add(){
+		$('#user-add-page-window').window('open');
+
+	}
 </script>
 <title>用户管理</title>
 </head>
 <body style="height: 90%">
 	<div id="user-main-page-panel" class="easyui-panel" style="height: 90%">
+		<table id="user-main-page-datagrid"></table>
+		<div id="user-add-page-window" class="easyui-window" closed="true">
+			<form style="padding:10px 20px 10px 40px;">
+				<p>用户姓名:<input type="text" ></p>
+				<p>登录名称:<input type="text"></p>
+				<p>登录密码:<input type="password"></p>
+				<div style="padding:5px;text-align:center;">
+					<a href="#" class="easyui-linkbutton" icon="icon-ok">Ok</a>
+					<a href="#" class="easyui-linkbutton" icon="icon-cancel">Cancel</a>
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>
