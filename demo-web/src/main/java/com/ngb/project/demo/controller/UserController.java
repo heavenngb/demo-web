@@ -34,7 +34,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="add")
-	public String addPage() {
+	public String addPage(UserDetailVO vo) {
+		System.out.println(vo.getUserLoginName());
 		return "user/UserAddPage";
 	}
 }
