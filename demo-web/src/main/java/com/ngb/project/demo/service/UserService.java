@@ -23,4 +23,10 @@ public class UserService {
 
 		return vo != null;
 	}
+	
+	
+	public String insertOrUpdata(UserDetailVO vo) {
+		int insert = this.userDao.insert(vo);
+		return vo.getUserID();
+	}
 }

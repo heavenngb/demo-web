@@ -2,7 +2,9 @@ package com.ngb.project.demo.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -32,4 +34,8 @@ public abstract interface IUserDao {
 			@org.apache.ibatis.annotations.Result(column = "UD_USER_LOGIN_STATUS", property = "userLoginStatus"),
 			@org.apache.ibatis.annotations.Result(column = "UD_USER_PURVIEW", property = "userPurView") })
 	public abstract UserDetailVO checkLogin(@Param("name") String paramString1, @Param("password") String paramString2);
+	
+	@Insert({"INSERT INTO USER_DETAIL (UD_USER_NAME,UD_USER_LOGIN_NAME,UD_USER_LOGIN_PASSWORD) VALUES(#{vo.userName},#{vo.userLoginName},#{vo.userLoginPassword})"})
+	@Options(useGeneratedKeys = true, keyProperty = "vo.userID")
+	public abstract int insert(@Param("vo") UserDetailVO vo);
 }

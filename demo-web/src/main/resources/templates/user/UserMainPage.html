@@ -43,6 +43,15 @@
 				width : 100
 			} ] ]
 		});
+		
+		$('#user-add-page-form').form({
+			success:function(data){
+				alert(data)
+				$('#user-add-page-window').window('close');
+				$('#user-add-page-form').form('clear');
+				$('#user-main-page-datagrid').datagrid('reload');
+			}
+		});
 	});
 	
 
@@ -50,7 +59,6 @@
 		text : 'Add',
 		iconCls : 'icon-add',
 		handler : function() {
-			alert('add');
 			add();
 		}
 	}, {
@@ -86,9 +94,9 @@
 		<div id="user-add-page-window" class="easyui-window" closed="true" title="用戶新增">
 			<form style="padding:10px 20px 10px 40px;" id="user-add-page-form" action="/user/add" method="post">
 				<p><input type="hidden" name="userID"></p>
-				<p>用户姓名:<input type="text" name="vo.userName" class="easyui-textbox" data-options="required:true"></p>
-				<p>登录名称:<input type="text" name="vo.userLoginName" class="easyui-textbox" data-options="required:true"></p>
-				<p>登录密码:<input type="password" name="vo.userLoginPassword" class="easyui-textbox" data-options="required:true"></p>
+				<p>用户姓名:<input type="text" name="userName" class="easyui-textbox" data-options="required:true"></p>
+				<p>登录名称:<input type="text" name="userLoginName" class="easyui-textbox" data-options="required:true"></p>
+				<p>登录密码:<input type="password" name="userLoginPassword" class="easyui-textbox" data-options="required:true"></p>
 				<div style="padding:5px;text-align:center;">
 					<a onclick="addSubmit()" class="easyui-linkbutton" icon="icon-ok">新增</a>
 					<a onclick="addCancel()" class="easyui-linkbutton" icon="icon-cancel">清除</a>
