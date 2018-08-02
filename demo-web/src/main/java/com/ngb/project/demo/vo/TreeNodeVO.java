@@ -11,7 +11,7 @@ public class TreeNodeVO {
 	private List<? extends TreeNodeVO> children;
 
 	public String getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(String id) {
@@ -19,7 +19,7 @@ public class TreeNodeVO {
 	}
 
 	public String getText() {
-		return this.text;
+		return text;
 	}
 
 	public void setText(String text) {
@@ -27,7 +27,7 @@ public class TreeNodeVO {
 	}
 
 	public String getState() {
-		return this.state;
+		return state;
 	}
 
 	public void setState(String state) {
@@ -35,7 +35,7 @@ public class TreeNodeVO {
 	}
 
 	public String getChecked() {
-		return this.checked;
+		return checked;
 	}
 
 	public void setChecked(String checked) {
@@ -43,7 +43,7 @@ public class TreeNodeVO {
 	}
 
 	public String getAttributes() {
-		return this.attributes;
+		return attributes;
 	}
 
 	public void setAttributes(String attributes) {
@@ -51,10 +51,11 @@ public class TreeNodeVO {
 	}
 
 	public List<? extends TreeNodeVO> getChildren() {
-		return this.children;
+		return children;
 	}
 
 	public void setChildren(List<? extends TreeNodeVO> children) {
 		this.children = children;
 	}
+
 }

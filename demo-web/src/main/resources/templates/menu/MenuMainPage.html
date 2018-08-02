@@ -5,15 +5,116 @@
 <link rel="stylesheet" type="text/css" href="/css/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="/css/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="/css/demo.css">
+<style type="text/css">
+	label{width:80px;display:inline-block;}
+</style>
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
 <script>
+$(function(){
+	//init left menu
+	$('#menu-main-page-tree').tree({
+		url:'/menu/findAll',
+		method:'get',
+		lines:true,
+		animate:true,
+		checkbox:true,
+		dnd:true,
+		onContextMenu: function(e, node){
+			e.preventDefault();
+			$('#menu-main-page-tree').tree('select', node.target);
+			$('#menu-main-page-tree-menu').menu('show', {
+				left: e.pageX,
+				top: e.pageY
+			});
+		}
+		
+	});
+})
 
+function append(type){
+	$('#menu-main-page-form').form({
+		url:"/menu/add",
+		success:function(data){
+			console.log(data);
+			$('#menu-main-page-window').window('close');
+			$('#menu-main-page-form').form('clear');
+			$('#menu-main-page-tree').tree('reload');
+		}
+	});
+	
+	var node = $('#menu-main-page-tree').tree('getSelected');
+	$('#menu-main-page-form').form('clear');
+	//添加子菜单
+	if( 1 == type ){
+		$('#ufmPID').val(node.ufmID);
+// 		$('#ufmPID').textbox('setValue', node.ufmID);
+		$('#ufmPDetail').textbox('setValue', node.ufmDetail);
+	//添加同级菜单
+	}else if ( 2 == type ){
+		var pNode = $('#menu-main-page-tree').tree('getParent', node.target);
+		if(pNode){
+			$('#ufmPID').val(pNode.ufmID);
+// 			$('#ufmPID').textbox('setValue', pNode.ufmID);
+			$('#ufmPDetail').textbox('setValue', pNode.ufmDetail);
+		}else{
+			$('#ufmPID').val('0');
+// 			$('#ufmPID').textbox('setValue', '0');
+			$('#ufmPDetail').textbox('setValue', '根节点');
+		}
+	}
+	
+	$('#menu-main-page-window').window({
+		width:400,
+		height:215
+	});
+	$('#menu-main-page-window').window('open');
+}
+
+function submit(){
+	$('#menu-main-page-form').form('submit');
+}
+
+function cancel(){
+	$('#menu-main-page-form').form('clear');
+}
 </script>
 <title>菜单管理</title>
 </head>
 <body style="height: 90%">
 	<div id="menu-main-page-panel" class="easyui-panel" style="height: 90%">
+		<div data-options="region:'west'" title="菜单" style="width: 20%;"
+			id="menu-main-page-tree"></div>
+		<div id="menu-main-page-tree-menu" class="easyui-menu" style="width: 120px;">
+			<div onclick="append(1)" data-options="iconCls:'icon-add'">添加子菜单</div>
+			<div onclick="append(2)" data-options="iconCls:'icon-add'">添加同级菜单</div>
+			<div onclick="remove()" data-options="iconCls:'icon-remove'">删除菜单</div>
+		</div>
+		<div id="menu-main-page-window" class="easyui-window" closed="true" title="添加菜单">
+			<form style="padding:10px 20px 10px 40px;" id="menu-main-page-form" method="post">
+				<p>
+					<!-- <label>父级菜单ID:</label>  -->
+					<input type="hidden" name="ufmPID" id="ufmPID"/>
+				</p>
+				<p>
+					<label>父级菜单名称:</label>
+					<input type="text" name="ufmPDetail" id="ufmPDetail" class="easyui-textbox" data-options="required:true" disabled="disabled" />
+				</p>
+				<p>
+					<label>菜单名称:</label>
+					<input type="text" name="ufmDetail" id="ufmDetail" class="easyui-textbox" data-options="required:true" />
+				</p>
+				<p>
+					<label>菜单URL:</label>
+					<input type="text" name="ufmURL" id="ufmURL" class="easyui-textbox" />
+				</p>
+				<div style="padding:5px;text-align:center;">
+					<a onclick="submit()" class="easyui-linkbutton" icon="icon-ok">确认</a>
+					<a onclick="cancel()" class="easyui-linkbutton" icon="icon-cancel">清除</a>
+				</div>
+			</form>
+		</div>
 	</div>
+
 </body>
 </html>

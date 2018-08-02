@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ngb.project.demo.service.UserService;
 
 @Controller
-public class LoginContronller {
+public class LoginController {
 
 	@Autowired
 	private UserService userService;

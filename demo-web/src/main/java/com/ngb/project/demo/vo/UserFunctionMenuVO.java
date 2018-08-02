@@ -8,7 +8,7 @@ public class UserFunctionMenuVO extends TreeNodeVO {
 	private String ufmURL;
 
 	public String getUfmID() {
-		return this.ufmID;
+		return ufmID;
 	}
 
 	public void setUfmID(String ufmID) {
@@ -16,7 +16,7 @@ public class UserFunctionMenuVO extends TreeNodeVO {
 	}
 
 	public String getUfmPID() {
-		return this.ufmPID;
+		return ufmPID;
 	}
 
 	public void setUfmPID(String ufmPID) {
@@ -24,7 +24,7 @@ public class UserFunctionMenuVO extends TreeNodeVO {
 	}
 
 	public String getUfmCode() {
-		return this.ufmCode;
+		return ufmCode;
 	}
 
 	public void setUfmCode(String ufmCode) {
@@ -32,7 +32,7 @@ public class UserFunctionMenuVO extends TreeNodeVO {
 	}
 
 	public String getUfmDetail() {
-		return this.ufmDetail;
+		return ufmDetail;
 	}
 
 	public void setUfmDetail(String ufmDetail) {

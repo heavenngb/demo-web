@@ -30,4 +30,12 @@ public class UserFunctionMenuService {
 		}
 		vo.setChildren(childrenVOs);
 	}
+	
+	public String insert(UserFunctionMenuVO vo) {
+		if("0".equals(vo.getUfmPID())) {
+			vo.setUfmPID("");
+		}
+		this.menuDao.insert(vo);
+		return vo.getUfmID();
+	}
 }
