@@ -18,7 +18,7 @@ $(function(){
 		animate:true,
 		dnd:true,
 		onClick:function(node){
-			console.log(node);
+// 			console.log(node);
 			if(!node.children.length){
 				addTab(node.text,node.ufmURL);
 			}else{
@@ -28,7 +28,7 @@ $(function(){
 	});
 	//add table 
 	function addTab(title, url){
-		console.log("addTab");
+// 		console.log("addTab");
 		if ($('#main_tabs').tabs('exists', title)){
 			$('#main_tabs').tabs('select', title);
 		} else {
@@ -46,7 +46,7 @@ $(function(){
 <body style="height: 100%;overflow-y: hidden;">
 	<div class="easyui-layout" style="width: 100%;min-width:600px;height: 90%;min-height: 400px;">
 		<div data-options="region:'north'" title="家庭财务管理系统" style="height:50px;" align="right">
-			登陆成功。用户名:${name}, 密码:${password}
+			登陆成功。用户名:${name}
 		</div>
 		<div data-options="region:'south'" title="底部" style="height:50px;"></div>
 		<div data-options="region:'west'" title="功能菜单" style="width:20%;" id="main_menu"></div>

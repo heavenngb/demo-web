@@ -2,7 +2,9 @@ package com.ngb.project.demo.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -39,4 +41,24 @@ public abstract interface IUserFunctionMenuDao {
 			@org.apache.ibatis.annotations.Result(id = true, column = "UFM_ID", property = "id"),
 			@org.apache.ibatis.annotations.Result(column = "UFM_DETAIL", property = "text") })
 	public abstract List<UserFunctionMenuVO> findByPID(@Param("pid") String paramString);
+	
+	@Insert({"<script>",
+		"INSERT INTO USER_FUNCTION_MENU ",
+		"(",
+		"<if test=\"vo.ufmPID!=null and vo.ufmPID != '' \">",
+			"UFM_PID,",
+		"</if>",
+		"UFM_URL,",
+		"UFM_DETAIL)",
+		"VALUES",
+		"(",
+		"<if test=\"vo.ufmPID!=null and vo.ufmPID != '' \">",
+			"#{vo.ufmPID},",
+		"</if>",
+		"#{vo.ufmURL},",
+		"#{vo.ufmDetail})",
+		"</script>"
+	})
+	@Options(useGeneratedKeys = true, keyProperty = "vo.ufmID")
+	public abstract int insert(@Param("vo") UserFunctionMenuVO vo);
 }
