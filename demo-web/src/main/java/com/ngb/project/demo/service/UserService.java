@@ -17,6 +17,10 @@ public class UserService {
 	public List<UserDetailVO> findAll() {
 		return this.userDao.findAll();
 	}
+	
+	public UserDetailVO findByID(String id) {
+		return this.userDao.findByID(id);
+	}
 
 	public boolean checkLogin(String name, String password) {
 		UserDetailVO vo = this.userDao.checkLogin(name, password);
@@ -24,9 +28,16 @@ public class UserService {
 		return vo != null;
 	}
 	
-	
-	public String insertOrUpdata(UserDetailVO vo) {
-		int insert = this.userDao.insert(vo);
+	public String insert(UserDetailVO vo) {
+		this.userDao.insert(vo);
 		return vo.getUserID();
+	}
+	
+	public int updata(UserDetailVO vo) {
+		return this.userDao.update(vo);
+	}
+	
+	public int remove(List<String> ids) {
+		return this.userDao.remove(ids);
 	}
 }

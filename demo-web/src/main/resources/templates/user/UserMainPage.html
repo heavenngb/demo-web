@@ -43,15 +43,6 @@
 				width : 100
 			} ] ]
 		});
-		
-		$('#user-add-page-form').form({
-			success:function(data){
-				alert(data)
-				$('#user-add-page-window').window('close');
-				$('#user-add-page-form').form('clear');
-				$('#user-main-page-datagrid').datagrid('reload');
-			}
-		});
 	});
 	
 
@@ -62,28 +53,82 @@
 			add();
 		}
 	}, {
-		text : 'Cut',
-		iconCls : 'icon-cut',
+		text : 'Edit',
+		iconCls : 'icon-edit',
 		handler : function() {
-			alert('cut')
+			edit();
 		}
 	}, '-', {
-		text : 'Save',
-		iconCls : 'icon-save',
+		text : 'Remove',
+		iconCls : 'icon-remove',
 		handler : function() {
-			alert('save')
+			remove();
 		}
 	} ];
 	
 	function add(){
-		$('#user-add-page-window').window('open');
+		$('#user-page-window').window({
+			title:"用戶新增"
+		});
+		$('#user-page-form').form({
+			url:"/user/add",
+			success:function(data){
+				$('#user-page-window').window('close');
+				$('#user-page-form').form('clear');
+				$('#user-main-page-datagrid').datagrid('reload');
+			}
+		});
+		$('#user-page-window').window('open');
+	}
+	function submit(){
+		$('#user-page-form').form('submit');
+	}
+	function cancel(){
+		$('#user-page-form').form('clear');
 	}
 	
-	function addSubmit(){
-		$('#user-add-page-form').form('submit');
+	function edit(){
+		var arr = $('#user-main-page-datagrid').datagrid('getSelections');
+		if(arr.length < 1){
+			$.messager.alert('Error','请选择一条记录');
+			return;
+		}
+		if(arr.length > 1){
+			$.messager.alert('Error','只能选择一条记录');
+			return "只能选择一条记录"
+		}
+		$('#user-page-form').form({
+			url:"/user/edit",
+			success:function(data){
+				$('#user-page-window').window('close');
+				$('#user-page-form').form('clear');
+				$('#user-main-page-datagrid').datagrid('reload');
+			}
+		});
+		$('#user-page-form').form('load','/user/findByID/'+arr[0].userID);
+		$('#user-page-window').window('open');
 	}
-	function addCancel(){
-		$('#user-add-page-form').form('clear');
+	
+	
+	function remove(){
+		$.messager.confirm('提示','请确实是否要删除选中记录吗?',function(r){
+			if (r){
+				var arr = $('#user-main-page-datagrid').datagrid('getSelections');
+				var ids = new Array();
+				for(var i=0;i<arr.length;i++){
+					ids.push(arr[i].userID);
+				}
+				$.ajax({
+					url:'/user/remove',
+					type:"POST",
+					data:{"ids":ids},
+					success:function(data){
+						console.log(data);
+						$('#user-main-page-datagrid').datagrid('reload');
+					}
+				})
+			}
+		});
 	}
 </script>
 <title>用户管理</title>
@@ -91,15 +136,18 @@
 <body style="height: 90%">
 	<div id="user-main-page-panel" class="easyui-panel" style="height: 90%">
 		<table id="user-main-page-datagrid"></table>
-		<div id="user-add-page-window" class="easyui-window" closed="true" title="用戶新增">
-			<form style="padding:10px 20px 10px 40px;" id="user-add-page-form" action="/user/add" method="post">
+		<div id="user-page-window" class="easyui-window" closed="true" title="用戶修改">
+			<form style="padding:10px 20px 10px 40px;" id="user-page-form" method="post">
 				<p><input type="hidden" name="userID"></p>
 				<p>用户姓名:<input type="text" name="userName" class="easyui-textbox" data-options="required:true"></p>
 				<p>登录名称:<input type="text" name="userLoginName" class="easyui-textbox" data-options="required:true"></p>
 				<p>登录密码:<input type="password" name="userLoginPassword" class="easyui-textbox" data-options="required:true"></p>
+				<p>用户状态:<input type="text" name="userStatus" class="easyui-textbox"></p>
+				<p>登录状态:<input type="text" name="userLoginStatus" class="easyui-textbox"></p>
+				<p>用户权限:<input type="text" name="userPurView" class="easyui-textbox"></p>
 				<div style="padding:5px;text-align:center;">
-					<a onclick="addSubmit()" class="easyui-linkbutton" icon="icon-ok">新增</a>
-					<a onclick="addCancel()" class="easyui-linkbutton" icon="icon-cancel">清除</a>
+					<a onclick="submit()" class="easyui-linkbutton" icon="icon-ok">确认</a>
+					<a onclick="cancel()" class="easyui-linkbutton" icon="icon-cancel">清除</a>
 				</div>
 			</form>
 		</div>
