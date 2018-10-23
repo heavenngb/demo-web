@@ -38,4 +38,8 @@ public class UserFunctionMenuService {
 		this.menuDao.insert(vo);
 		return vo.getUfmID();
 	}
+	
+	public int remove(String ...ids) {
+		return this.menuDao.remove(ids);
+	}
 }

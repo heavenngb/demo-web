@@ -2,6 +2,7 @@ package com.ngb.project.demo.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -61,4 +62,15 @@ public abstract interface IUserFunctionMenuDao {
 	})
 	@Options(useGeneratedKeys = true, keyProperty = "vo.ufmID")
 	public abstract int insert(@Param("vo") UserFunctionMenuVO vo);
+	
+	@Delete({
+		"<script>",
+			"DELETE FROM USER_FUNCTION_MENU WHERE UFM_ID in (",
+				"<foreach collection='ids' item='id' separator=','>",
+				"#{id}",
+				"</foreach>",
+			")",
+		"</script>"
+	})
+	public abstract int remove(@Param("ids") String ...ids);
 }

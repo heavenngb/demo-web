@@ -71,6 +71,36 @@ function append(type){
 	$('#menu-main-page-window').window('open');
 }
 
+
+function remove(){
+	$.messager.confirm('提示','请确实是否要删除选中记录吗?',function(r){
+		if (r){
+			var ids = new Array();
+			var nodes = $('#menu-main-page-tree').tree('getChecked');
+			console.log(nodes);
+			console.log(!!nodes);
+			if(nodes && nodes.length > 0){
+				for(var i=0; i<nodes.length; i++){
+					ids.push(nodes[i].id);
+				}
+			}else{
+				var node = $('#menu-main-page-tree').tree('getSelected');
+				console.log(node);
+				ids.push(node.id);
+			}
+			$.ajax({
+				url:'/menu/remove',
+				type:"POST",
+				data:{"ids":ids},
+				success:function(data){
+					console.log(data);
+					$('#menu-main-page-tree').tree('reload');
+				}
+			})
+		}
+	});
+}
+
 function submit(){
 	$('#menu-main-page-form').form('submit');
 }
